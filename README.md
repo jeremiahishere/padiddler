@@ -1,6 +1,6 @@
 # TheDiddler
 
-TODO: Write a gem description
+Maniuplate hashes from an external source so they work for your database setup.  Especially useful when reading data from external api or csv.  Instead of writing a messy conversion system, create easily testable Diddler objects to massage the data.
 
 ## Installation
 
@@ -8,22 +8,30 @@ Add this line to your application's Gemfile:
 
     gem 'the_diddler'
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install the_diddler
-
 ## Usage
 
-TODO: Write usage instructions here
+First, get a sample piece of input that needs diddling.  In this example, the first name and last name don't need extra processing but the date of birth should be renamed and turned into a Date object.
 
-## Contributing
+    input = {
+      first_name: 'Jeremiah',
+      last_name: 'Hemphill',
+      dob_year: '2014',
+      dob_month: '1',
+      dob_day: '24'
+    }
 
-1. Fork it ( http://github.com/<my-github-username>/the_diddler/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Second, define your Diddler for the input
+
+    PersonDiddler < TheDiddler::Base
+      attr_output :first_name, :last_name
+
+      def date_of_birth
+        Date.parse("#{@dob_year}/#{@dob_month}/#{@dob_day}")
+      end
+    end
+
+Third, diddle away
+
+    input = get_input_from_csv
+    diddler = PersonDiddler.new(input)
+    Person.create(diddler.diddle)

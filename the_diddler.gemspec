@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = TheDiddler::VERSION
   spec.authors       = ["Jeremiah"]
   spec.email         = ["jeremiah@cloudspace.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Convert external data into a more usable format}
+  spec.description   = %q{Convert external data into a more usable format}
+  spec.homepage      = "http://www.github.com/jeremiahishere/the_diddler"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
 end
