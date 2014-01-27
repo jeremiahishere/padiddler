@@ -1,36 +1,62 @@
 require 'spec_helper'
 
 # the sample class to test on
-class SampleDiddler < TheDiddler::Base
+class SampleDiddler < Padiddler::Base
 end
 
-describe TheDiddler::Base do
+describe Padiddler::Base do
   # after running each test, remove the methods we have added
   after(:each) do
     diddler = SampleDiddler.new({})
     SampleDiddler.send(:remove_method, :first_name) if diddler.respond_to? :first_name
     SampleDiddler.send(:remove_method, :middle_name) if diddler.respond_to? :middle_name
     SampleDiddler.send(:remove_method, :last_name) if diddler.respond_to? :last_name
+    SampleDiddler.send(:remove_method, :hello) if diddler.respond_to? :hello
   end
 
-  describe 'attr_outputs' do
+  describe 'keep' do
     it 'should take a list of symbols and define multiple instance methods' do
-      SampleDiddler.attr_outputs(:first_name, :last_name)
+      SampleDiddler.keep(:first_name, :last_name)
       diddler = SampleDiddler.new
       expect(diddler).to respond_to(:first_name)
       expect(diddler).to respond_to(:last_name)
     end
 
     it 'should take a single symbol and define one instance method' do
-      SampleDiddler.attr_outputs(:middle_name)
+      SampleDiddler.keep(:middle_name)
       diddler = SampleDiddler.new
       expect(diddler).to respond_to(:middle_name)
     end
 
-    it 'should also be callable through attr_output' do
-      SampleDiddler.attr_output(:middle_name)
+    it 'the new method should return the value of the instance variable with the same name' do
+      SampleDiddler.keep(:first_name, :last_name)
       diddler = SampleDiddler.new
-      expect(diddler).to respond_to(:middle_name)
+      diddler.instance_variable_set(:@first_name, 'Jeremiah')
+      expect(diddler.first_name).to eq('Jeremiah')
+    end
+  end
+
+  describe 'rename' do
+    it 'should take a hash and define instance methods' do
+      SampleDiddler.rename(:first_name => :firstname)
+      diddler = SampleDiddler.new
+      expect(diddler).to respond_to(:first_name)
+      expect(diddler).not_to respond_to(:firstname)
+    end
+
+    it 'should return the instance referred to in the value of the key value pair' do
+      SampleDiddler.rename(:first_name => :firstname)
+      diddler = SampleDiddler.new
+      diddler.instance_variable_set(:@firstname, 'Jeremiah')
+      expect(diddler.first_name).to eq('Jeremiah')
+    end
+  end
+
+  describe 'add' do
+    it 'should create a new method with the name and body given by the arguments' do
+      SampleDiddler.add(:hello) { 'Hello World' }
+      diddler = SampleDiddler.new
+      expect(diddler.hello).to eq('Hello World') 
     end
   end
 

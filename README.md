@@ -1,4 +1,8 @@
-# TheDiddler
+# Padiddler
+
+Sometimes data comes to you with a headlight out.
+
+## Description
 
 Maniuplate hashes from an external source so they work for your database setup.  Especially useful when reading data from external api or csv.  Instead of writing a messy conversion system, create easily testable Diddler objects to massage the data.
 
@@ -6,7 +10,7 @@ Maniuplate hashes from an external source so they work for your database setup. 
 
 Add this line to your application's Gemfile:
 
-    gem 'the_diddler'
+    gem 'padiddler'
 
 ## Usage
 
@@ -15,6 +19,7 @@ First, get a sample piece of input that needs diddling.  In this example, the fi
     input = {
       first_name: 'Jeremiah',
       last_name: 'Hemphill',
+      tel_no: '555-1234',
       dob_year: '2014',
       dob_month: '1',
       dob_day: '24'
@@ -22,10 +27,15 @@ First, get a sample piece of input that needs diddling.  In this example, the fi
 
 Second, define your Diddler for the input
 
-    PersonDiddler < TheDiddler::Base
-      attr_output :first_name, :last_name
+    PersonDiddler < Padiddler::Base
+      # these instance variables should be made public with no changes
+      keep :first_name, :last_name
 
-      def date_of_birth
+      # these instance variable should be renamed in the output
+      rename :phone => :tel_no
+
+      # this additional output should be added
+      add :date_of_birth do
         Date.parse("#{@dob_year}/#{@dob_month}/#{@dob_day}")
       end
     end
@@ -33,5 +43,5 @@ Second, define your Diddler for the input
 Third, diddle away
 
     input = get_input_from_csv
-    diddler = PersonDiddler.new(input)
-    Person.create(diddler.diddle)
+    pdiddler = PersonDiddler.new(input)
+    Person.create(pdiddler.diddle)

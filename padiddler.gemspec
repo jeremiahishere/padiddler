@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'the_diddler/version'
+require 'padiddler/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "the_diddler"
-  spec.version       = TheDiddler::VERSION
+  spec.name          = "padiddler"
+  spec.version       = Padiddler::VERSION
   spec.authors       = ["Jeremiah"]
   spec.email         = ["jeremiah@cloudspace.com"]
   spec.summary       = %q{Convert external data into a more usable format}
   spec.description   = %q{Convert external data into a more usable format}
-  spec.homepage      = "http://www.github.com/jeremiahishere/the_diddler"
+  spec.homepage      = "http://www.github.com/jeremiahishere/padiddler"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

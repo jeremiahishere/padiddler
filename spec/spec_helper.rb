@@ -1,5 +1,5 @@
 require 'rspec'
-require 'the_diddler'
+require 'padiddler'
 
 RSpec.configure do |config|
   config.pattern = '**/*_spec.rb'
