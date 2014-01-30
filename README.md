@@ -44,5 +44,7 @@ Second, define your Diddler for the input
 Third, diddle away
 
     input = get_input_from_csv
-    pdiddler = PersonDiddler.new(input)
-    Person.create(pdiddler.diddle)
+    input.each_row do |row| 
+      pdiddler = PersonDiddler.new(row)
+      Person.create(pdiddler.diddle)
+    end
