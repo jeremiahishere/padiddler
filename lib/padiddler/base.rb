@@ -33,7 +33,7 @@ module Padiddler
       private
 
       # create a name accessor for an instance variable
-      def instance_variable_accessor(var_name, name)
+      def instance_variable_accessor(name, var_name)
         instance_var = instance_variable_name(var_name) 
         define_method(name) { instance_variable_get(instance_var) }
       end

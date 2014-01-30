@@ -38,14 +38,14 @@ describe Padiddler::Base do
 
   describe 'rename' do
     it 'should take a hash and define instance methods' do
-      SampleDiddler.rename(:first_name => :firstname)
+      SampleDiddler.rename(:firstname => :first_name)
       diddler = SampleDiddler.new
       expect(diddler).to respond_to(:first_name)
       expect(diddler).not_to respond_to(:firstname)
     end
 
     it 'should return the instance referred to in the value of the key value pair' do
-      SampleDiddler.rename(:first_name => :firstname)
+      SampleDiddler.rename(:firstname => :first_name)
       diddler = SampleDiddler.new
       diddler.instance_variable_set(:@firstname, 'Jeremiah')
       expect(diddler.first_name).to eq('Jeremiah')

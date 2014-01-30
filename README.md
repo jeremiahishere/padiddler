@@ -32,7 +32,8 @@ Second, define your Diddler for the input
       keep :first_name, :last_name
 
       # these instance variable should be renamed in the output
-      rename :phone => :tel_no
+      # in this case, the input key 'tel_no' will be called 'phone' in the output.
+      rename :tel_no => :phone
 
       # this additional output should be added
       add :date_of_birth do
